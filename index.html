@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Latin → English Quiz</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div>
+        <h1>Latin → English Quiz</h1>
+        <div class="subtitle">Vocabulary + essential grammar (static site, works on GitHub Pages).</div>
+      </div>
+      <div class="small" id="progressSummary"></div>
+    </div>
+
+    <!-- START / SETTINGS -->
+    <section class="card" id="screenStart">
+      <div class="row">
+        <div class="field">
+          <label for="deckSelect">Deck</label>
+          <select id="deckSelect">
+            <option value="vocab">Vocabulary</option>
+            <option value="grammar">Grammar (porto + cases)</option>
+            <option value="mixed">Mixed</option>
+          </select>
+          <div class="small">Latin → English only.</div>
+        </div>
+
+        <div class="field">
+          <label for="modeSelect">Answer style</label>
+          <select id="modeSelect">
+            <option value="mc">Multiple choice</option>
+            <option value="type">Type the answer</option>
+          </select>
+          <div class="small">Typing is stricter; multiple-choice is quicker.</div>
+        </div>
+
+        <div class="field">
+          <label for="countSelect">Questions</label>
+          <select id="countSelect">
+            <option value="10">10</option>
+            <option value="20" selected>20</option>
+            <option value="30">30</option>
+            <option value="all">All</option>
+          </select>
+          <div class="small">You can also retry only missed questions at the end.</div>
+        </div>
+      </div>
+
+      <div class="hr"></div>
+
+      <div class="row">
+        <div class="field">
+          <label>Practice settings</label>
+          <div class="toggle">
+            <input type="checkbox" id="spacedToggle" checked />
+            <span>Use spaced repetition (more focus on weak words)</span>
+          </div>
+          <div class="toggle">
+            <input type="checkbox" id="shuffleToggle" checked />
+            <span>Shuffle questions</span>
+          </div>
+          <div class="small">Progress is stored locally in this browser (no accounts, no backend).</div>
+        </div>
+
+        <div class="field" style="justify-content:flex-end;">
+          <button class="btn" id="startBtn">Start quiz</button>
+          <button class="btn secondary" id="exportBtn" style="margin-top:10px;">Export progress (JSON)</button>
+          <button class="btn danger" id="resetBtn" style="margin-top:10px;">Reset progress</button>
+        </div>
+      </div>
+
+      <div class="hr"></div>
+
+      <div class="small">
+        Keyboard: in multiple-choice mode press <kbd>1</kbd>–<kbd>4</kbd>. In typing mode press <kbd>Enter</kbd> to submit.
+      </div>
+    </section>
+
+    <!-- QUIZ -->
+    <section class="card hidden" id="screenQuiz">
+      <div class="quizTop">
+        <div class="stat"><b id="statDeck"></b> • <span id="statMode"></span></div>
+        <div class="stat">Q <b id="statQ"></b> / <b id="statTotal"></b> • Correct: <b id="statCorrect"></b> • Streak: <b id="statStreak"></b></div>
+      </div>
+
+      <div class="progressBar" style="margin-top:12px;">
+        <div id="barFill"></div>
+      </div>
+
+      <div class="prompt">
+        <div class="latin" id="latinPrompt">—</div>
+        <div class="hint" id="latinHint"></div>
+      </div>
+
+      <div class="options" id="options"></div>
+
+      <div class="answerRow hidden" id="typeRow">
+        <input type="text" id="typeInput" placeholder="Type the English meaning…" autocomplete="off" />
+        <button class="btn" id="submitTypeBtn">Submit</button>
+      </div>
+
+      <div class="feedback hidden" id="feedbackBox">
+        <div class="title" id="feedbackTitle"></div>
+        <div id="feedbackBody"></div>
+      </div>
+
+      <div class="footerRow">
+        <button class="btn secondary" id="quitBtn">Quit</button>
+        <button class="btn" id="nextBtn" disabled>Next</button>
+      </div>
+    </section>
+
+    <!-- RESULTS -->
+    <section class="card hidden" id="screenEnd">
+      <div class="quizTop">
+        <div class="stat"><b>Results</b></div>
+        <div class="stat">Score: <b id="endScore"></b> • Accuracy: <b id="endAcc"></b></div>
+      </div>
+
+      <div class="hr"></div>
+
+      <div id="missedWrap" class="hidden">
+        <div class="stat"><b>Missed</b></div>
+        <ul class="list" id="missedList"></ul>
+        <div class="hr"></div>
+      </div>
+
+      <div class="footerRow">
+        <button class="btn secondary" id="backBtn">Back to settings</button>
+        <button class="btn secondary" id="retryMissedBtn">Retry missed</button>
+        <button class="btn" id="restartBtn">New quiz</button>
+      </div>
+    </section>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
